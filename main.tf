@@ -121,23 +121,25 @@ resource "aws_cloudwatch_metric_alarm" "cache_memory" {
 }
 
 module "dns" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.1.1"
-  namespace  = "${var.namespace}"
-  name       = "${var.name}"
-  stage      = "${var.stage}"
-  ttl        = 60
-  zone_id    = "${var.zone_id}"
-  records    = ["${aws_elasticache_cluster.default.cluster_address}"]
-  depends_on = ["aws_elasticache_cluster.default"]
+  source    = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.2.6"
+  namespace = "${var.namespace}"
+  name      = "${var.name}"
+  stage     = "${var.stage}"
+  ttl       = 60
+  zone_id   = "${var.zone_id}"
+  records   = ["${aws_elasticache_cluster.default.cluster_address}"]
+
+  #depends_on = ["aws_elasticache_cluster.default"]
 }
 
 module "dns_config" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.1.1"
-  namespace  = "${var.namespace}"
-  name       = "config.${var.name}"
-  stage      = "${var.stage}"
-  ttl        = 60
-  zone_id    = "${var.zone_id}"
-  records    = ["${aws_elasticache_cluster.default.configuration_endpoint}"]
-  depends_on = ["aws_elasticache_cluster.default"]
+  source    = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.2.6"
+  namespace = "${var.namespace}"
+  name      = "config.${var.name}"
+  stage     = "${var.stage}"
+  ttl       = 60
+  zone_id   = "${var.zone_id}"
+  records   = ["${aws_elasticache_cluster.default.configuration_endpoint}"]
+
+  #depends_on = ["aws_elasticache_cluster.default"]
 }
